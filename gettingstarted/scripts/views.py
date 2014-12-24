@@ -13,8 +13,8 @@ from django.template import RequestContext
 # Create your views here.
 
 login_url='/scripts/login/'
-ITEMS_PER_PAGE=10 #목록 수
-PAGE_GROUP=10  # 화면에 나오는 페이지 수
+ITEMS_PER_PAGE=10  
+PAGE_GROUP=10  
 
 from django.core.paginator import Paginator
 from scripts.forms import *
