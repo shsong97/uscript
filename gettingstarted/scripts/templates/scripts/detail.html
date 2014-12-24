@@ -1,0 +1,26 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+<head>
+<title>Scripts article</title>
+{% include "header.html" %}
+</head>
+<body>
+<h4>{{ scripts.title }}</h4>
+<div id="dvData">
+<iframe id="myFrame" style="display:none"></iframe>
+</div>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% csrf_token %}
+<a class="btn" href="update/">Edit</a>
+<a class="btn" href='data:application/text;charset=utf-8,{{ scripts.contents }}' download="{{ scripts.title }}">Download</a>
+<a class="btn" href="/scripts/{{ scripts.id }}/delete">Delete</a>
+<a class="btn" href="/scripts/">List</a>
+  <div><pre><code>{{ scripts.contents }}</code></pre></div>
+<a class="btn" href="update/">Edit</a>
+<a class="btn" href='data:application/text;charset=utf-8,{{ scripts.contents }}' download="{{ scripts.title }}">Download</a>
+<a class="btn" href="/scripts/{{ scripts.id }}/delete">Delete</a>
+<a class="btn" href="/scripts/">List</a>
+</body>
+</html>
