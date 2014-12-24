@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Success for register{% endblock %}
+{% block head %}Success for register.{% endblock %}
+{% block content %}
+Thank you for register.
+{% csrf_token %}
+<a href="/scripts/login/">Login</a> or 
+<a href="/scripts">Go Home</a>
+{% endblock %}
