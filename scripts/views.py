@@ -20,7 +20,9 @@ from django.core.paginator import Paginator
 from scripts.forms import *
 from django.db.models import Q
 
-
+def home(request):
+    return HttpResponseRedirect('/scripts')
+    
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/scripts')
