@@ -91,8 +91,8 @@ def upload_view(request):
 def scripts_update(request, scripts_id):
     scripts = get_object_or_404(Scripts,id=scripts_id)
     scripts.title=request.POST['title']
-    print scripts.title[-4:]
-    if scripts.title[-4:] != '.sql':
+    
+    if not scripts.title.__contains__('.sql'):
         scripts.title = scripts.title + '.sql'
     scripts.contents=request.POST['contents']
     scripts.save()
@@ -100,7 +100,13 @@ def scripts_update(request, scripts_id):
 
 @login_required(login_url=login_url)
 def scripts_add(request):
-    scripts = Scripts(title=request.POST['title'],contents=request.POST['contents'],user=request.user)
+    title=request.POST['title']
+
+    if not title.__contains__('.sql'):
+        title = title + '.sql'
+    
+    scripts = Scripts(title=title,contents=request.POST['contents'],user=request.user)
+    
     scripts.save()
     return HttpResponseRedirect('/scripts/')
 
