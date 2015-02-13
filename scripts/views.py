@@ -107,8 +107,8 @@ def scripts_add(request):
 @login_required(login_url=login_url)
 def scripts_delete(request, scripts_id):
     scripts = get_object_or_404(Scripts,id=scripts_id)
-    # if scripts.user = request.user then delete
-    scripts.delete()
+    if scripts.user == request.user:
+        scripts.delete()
     return HttpResponseRedirect('/scripts/')
 
 

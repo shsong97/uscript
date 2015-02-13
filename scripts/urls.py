@@ -1,10 +1,9 @@
 from django.conf.urls import patterns, url
 from scripts import views
 
-
 urlpatterns = patterns('',
     url(r'^$', views.search_page, name='index'),
-    #url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^short/$', views.ShortIndexView.as_view(), name='short'),
     url(r'^add/$', views.ScriptsCreate.as_view(), name='scripts_add'), 
     url(r'^add/submit/$', views.scripts_add, name='add_submit'),
