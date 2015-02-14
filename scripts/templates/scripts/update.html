@@ -4,6 +4,12 @@
 <head>
 <title>Update Scripts</title>
 {% include "header.html" %}
+<style type="text/css">
+	
+	body {
+		margin: 10px;
+	}
+</style>
 </head>
 <body>  
 <h4>{{ scripts.title }}</h4>
@@ -15,16 +21,16 @@
 	<table class="table">
 		<tr>
 			<td>Title</td>
-			<td><input type="text" name="title" value="{{ scripts.title }}" /></td>
+			<td><input class="form-control" type="text" name="title" value="{{ scripts.title }}" /></td>
 		</tr>
 		<tr>
 			<td>Contents</td>
-			<td><textarea name="contents" rows="10" cols="100" style="width:95%">{{ scripts.contents }}</textarea></td>
+			<td><textarea class="form-control" name="contents" rows="10" cols="100" style="width:95%">{{ scripts.contents }}</textarea></td>
 		</tr>
 	</table>
-<button class="btn" type="submit">Update</button>
-<a class="btn" href="/scripts/{{ scripts.id }}/delete">Delete</a>
-<a class="btn" href="/scripts/">List</a>
+<button class="btn btn-default" type="submit">Update</button>
+<a class="btn btn-default" href="/scripts/{{ scripts.id }}/delete">Delete</a>
+<a class="btn btn-default" href="/scripts/">List</a>
 </form>
 </body>
 </html>

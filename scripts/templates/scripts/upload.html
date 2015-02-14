@@ -4,6 +4,12 @@
 <head>
 <title>Upload Scripts</title>
 {% include "header.html" %}
+<style type="text/css">
+	
+	body {
+		margin: 10px;
+	}
+</style>
 </head>
 <body>  
 <h4>Upload Scripts</h4>
@@ -12,9 +18,11 @@
 
 <form action="" method="post" class="form-inline" enctype="multipart/form-data">
 {% csrf_token %}
-<input class="btn" type="file" name="fileToUpload" id="fileToUpload">
-<button class="btn" type="submit">Upload</button>
-<a class="btn" href="/scripts/">List</a>
+<p>
+<input type="file" name="fileToUpload" id="fileToUpload">
+</p>
+<button class="btn btn-default" type="submit">Upload</button>
+<a class="btn btn-default" href="/scripts/">List</a>
 </form>
 </body>
 </html>

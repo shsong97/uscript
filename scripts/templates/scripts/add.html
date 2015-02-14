@@ -4,26 +4,40 @@
 <head>
 <title>Write Scripts</title>
 {% include "header.html" %}
+<style>
+.total-page {
+	margin:10px;
+}
+
+.code-page {
+	margin:5px;
+	padding: 5px;
+}
+</style>
 </head>
 <body> 
-<h4>Write Scripts</h4>
+	<div class="total-page">
+	<h4>Write Scripts</h4>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'scripts:add_submit' %}" method="post" class="form-inline">
-{% csrf_token %}
-	<table class="table">
-		<tr>
-			<td>Title</td>
-			<td><input type="text" name="title" value="" /></td>
-		</tr>
-		<tr>
-			<td>Contents</td>
-			<td><textarea name="contents" rows="10" cols="100" style="width:95%"></textarea></td>
-		</tr>
-	</table>
-<button class="btn" type="submit">Send</button>
-<a class="btn" href="/scripts/">List</a>
-</form>
+	<form action="{% url 'scripts:add_submit' %}" method="post" class="form-inline">
+	{% csrf_token %}
+
+		<table class="table">
+			<tr>
+				<td>Title</td>
+				<td><input class="form-control" type="text" name="title" value="" /></td>
+			</tr>
+			<tr>
+				<td>Contents</td>
+				<td><textarea class="form-control" name="contents" rows="10" cols="100" style="width:95%"></textarea></td>
+			</tr>
+		</table>
+	<button class="btn btn-default" type="submit">Send</button>
+	<a class="btn btn-default" href="/scripts/">List</a>
+
+	</form>
+</div>
 </body>
 </html>

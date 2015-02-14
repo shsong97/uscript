@@ -17,18 +17,21 @@ ITEMS_PER_PAGE=10
 PAGE_GROUP=10  
 
 from django.core.paginator import Paginator
-from scripts.forms import *
+from scripts.forms import RegistrationForm
 from django.db.models import Q
 
 def home(request):
     return HttpResponseRedirect('/scripts')
     
+
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/scripts')
 
+
 def register_success(request):
     return render_to_response('registration/register_success.html',RequestContext(request))
+
 
 def register_page(request):
     if request.method=='POST':
@@ -49,6 +52,7 @@ def register_page(request):
     variables=RequestContext(request,{'form':form})
     return render_to_response('registration/register.html',variables)
 
+
 class IndexView(generic.ListView):
     template_name = 'scripts/index.html'
     context_object_name = 'latest_scripts_list'
@@ -59,15 +63,6 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now(),
         ).order_by('-pub_date')[:15]
 
-class ShortIndexView(generic.ListView):
-    template_name = 'scripts/shortlist.html'
-    context_object_name = 'latest_scripts_list'
-    taglist=[]
-    
-    def get_queryset(self):
-        return Scripts.objects.filter(
-            pub_date__lte=timezone.now(),
-        ).order_by('-pub_date')[:3]
 
 class DetailView(generic.DetailView):
     model = Scripts
@@ -80,12 +75,15 @@ class ScriptsUpdateView(generic.DetailView):
     model = Scripts
     template_name = 'scripts/update.html'
 
+
 class ScriptsCreate(CreateView):
     model = Scripts
     template_name = 'scripts/add.html'
 
+
 def upload_view(request):
     return render_to_response('scripts/upload.html',RequestContext(request))
+
 
 @login_required(login_url=login_url)
 def scripts_update(request, scripts_id):
@@ -98,6 +96,7 @@ def scripts_update(request, scripts_id):
     scripts.save()
     return HttpResponseRedirect(reverse('scripts:detail', args=(scripts_id,)))
 
+
 @login_required(login_url=login_url)
 def scripts_add(request):
     title=request.POST['title']
@@ -109,6 +108,7 @@ def scripts_add(request):
     
     scripts.save()
     return HttpResponseRedirect('/scripts/')
+
 
 @login_required(login_url=login_url)
 def scripts_delete(request, scripts_id):

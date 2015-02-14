@@ -4,23 +4,28 @@
 <head>
 <title>Scripts article</title>
 {% include "header.html" %}
+<style>
+.total-page {
+	margin:10px;
+}
+
+.code-page {
+	margin:5px;
+	padding: 5px;
+}
+</style>
 </head>
 <body>
-<h4>{{ scripts.title }}</h4>
-<div id="dvData">
-<iframe id="myFrame" style="display:none"></iframe>
-</div>
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<div class="total-page">
+	<h4>{{ scripts.title }}</h4>
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{% csrf_token %}
-<a class="btn" href="update/">Edit</a>
-<a class="btn" href='data:application/text;charset=utf-8,{{ scripts.contents }}' download="{{ scripts.title }}">Download</a>
-<a class="btn" href="/scripts/{{ scripts.id }}/delete">Delete</a>
-<a class="btn" href="/scripts/">List</a>
-  <div><pre><code>{{ scripts.contents }}</code></pre></div>
-<a class="btn" href="update/">Edit</a>
-<a class="btn" href='data:application/text;charset=euc-kr,{{ scripts.contents }}' download="{{ scripts.title }}">Download</a>
-<a class="btn" href="/scripts/{{ scripts.id }}/delete">Delete</a>
-<a class="btn" href="/scripts/">List</a>
+		{% csrf_token %}
+		<div class="code-page"><pre><code>{{ scripts.contents }}</code></pre></div>
+		<a class="btn btn-default" href="update/">Edit</a>
+		<a class="btn btn-default" href='data:application/text;charset=euc-kr,{{ scripts.contents }}' download="{{ scripts.title }}">Download</a>
+		<a class="btn btn-default" href="/scripts/{{ scripts.id }}/delete">Delete</a>
+		<a class="btn btn-default" href="/scripts/">List</a>
+	</div>
 </body>
 </html>

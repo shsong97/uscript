@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 {% block title %}User Login{% endblock %}
-{% block head %}User Login{% endblock %}
 {% block content %}
-        {% if form.has_errors %}
-        <p> 사용자 이름과 비밀번호가 일치하지 않습니다. Retry.</p>
-        {% endif %}
-        <form method="post" action=".">
+    <div class="container">
+
+      <form class="form-signin" method="post" action=".">
+        <h2 class="form-signin-heading">Please log in</h2>
         {% csrf_token %}
-            <p><label for="id_username">User ID:</label>
-                {{ form.username }}</p>
-            <p><label for="id_password">Password:</label>
-                {{ form.password }}</p>
-            <!-- go to success page after login -->
-            <input type="hidden" name="next" value="/scripts/" />
-            <input class="btn" type="submit" value="Login" />
-        </form>
+            
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="/scripts/" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      </form>
+
+    </div> <!-- /container -->
 {% endblock %}
