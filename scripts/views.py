@@ -4,7 +4,7 @@ from django.views import generic
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect
-from scripts.models import Scripts
+from scripts.models import Scripts, Tag
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
@@ -59,11 +59,27 @@ class DetailView(generic.DetailView):
     def get_queryset(self):
         return Scripts.objects.filter(pub_date__lte=timezone.now())
     
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        taglist = self.object.tag_set.all()
+        tag_string =','.join(
+                tag.tag_title for tag in self.object.tag_set.all()
+            )
+        context['taglist'] = tag_string
+        return context    
 
 class ScriptsUpdateView(generic.DetailView):
     model = Scripts
     template_name = 'scripts/update.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ScriptsUpdateView, self).get_context_data(**kwargs)
+        taglist = self.object.tag_set.all()
+        tag_string =','.join(
+                tag.tag_title for tag in self.object.tag_set.all()
+            )
+        context['taglist'] = tag_string
+        return context
 
 class ScriptsCreate(CreateView):
     model = Scripts
@@ -81,7 +97,17 @@ def scripts_update(request, scripts_id):
     
     if not scripts.title.__contains__('.sql'):
         scripts.title = scripts.title + '.sql'
+
     scripts.contents=request.POST['contents']
+
+    taglist = request.POST['taglist'].split(',')
+    
+    scripts.tag_set.clear()
+
+    for tag in taglist:
+        tag_item, dummy = Tag.objects.get_or_create(tag_title=tag.strip())
+        scripts.tag_set.add(tag_item)
+
     scripts.save()
     return HttpResponseRedirect(reverse('scripts:detail', args=(scripts_id,)))
 
@@ -94,6 +120,15 @@ def scripts_add(request):
         title = title + '.sql'
     
     scripts = Scripts(title=title,contents=request.POST['contents'],user=request.user)
+    scripts.save()
+
+    taglist = request.POST['taglist'].split(',')
+    
+    scripts.tag_set.clear()
+
+    for tag in taglist:
+        tag_item, dummy = Tag.objects.get_or_create(tag_title=tag.strip())
+        scripts.tag_set.add(tag_item)
     
     scripts.save()
     return HttpResponseRedirect('/scripts/')
