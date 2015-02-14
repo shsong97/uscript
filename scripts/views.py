@@ -53,17 +53,6 @@ def register_page(request):
     return render_to_response('registration/register.html',variables)
 
 
-class IndexView(generic.ListView):
-    template_name = 'scripts/index.html'
-    context_object_name = 'latest_scripts_list'
-    taglist=[]
-    
-    def get_queryset(self):
-        return Scripts.objects.filter(
-            pub_date__lte=timezone.now(),
-        ).order_by('-pub_date')[:15]
-
-
 class DetailView(generic.DetailView):
     model = Scripts
     template_name = 'scripts/detail.html'
@@ -121,10 +110,12 @@ def scripts_delete(request, scripts_id):
 def search_page(request):
     scripts=[]
 
+    query_type='title'
+
     if request.POST.has_key('query_type'):
         query_type=request.POST['query_type']
-    else:
-        query_type='title'
+
+    query=""
 
     if request.POST.has_key('query'):
         query=request.POST['query'].strip()
@@ -141,7 +132,6 @@ def search_page(request):
         else: # query is empty
             scripts=Scripts.objects.all().order_by('-pub_date')
     else: # no query
-        query=""
         scripts=Scripts.objects.all().order_by('-pub_date')
     
     paginator=Paginator(scripts,ITEMS_PER_PAGE)
