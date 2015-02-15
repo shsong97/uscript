@@ -37,3 +37,6 @@ class RegistrationForm(forms.Form):
         except ObjectDoesNotExist:
             return username
         raise forms.ValidationError('alread exists.')
+
+class UploadFileForm(forms.Form):
+    file  = forms.FileField()

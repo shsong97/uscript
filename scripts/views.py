@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout 
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 # Create your views here.
 
 login_url='/scripts/login/'
@@ -17,7 +18,7 @@ ITEMS_PER_PAGE=10
 PAGE_GROUP=10  
 
 from django.core.paginator import Paginator
-from scripts.forms import RegistrationForm
+from scripts.forms import RegistrationForm, UploadFileForm
 from django.db.models import Q
 
 def home(request):
@@ -86,9 +87,29 @@ class ScriptsCreate(CreateView):
     template_name = 'scripts/add.html'
 
 
+@csrf_exempt
 def upload_view(request):
-    return render_to_response('scripts/upload.html',RequestContext(request))
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request, request.FILES['file'])
 
+            return HttpResponseRedirect('/scripts/')
+    else:
+        form = UploadFileForm()
+
+    return render_to_response('scripts/upload.html',RequestContext(request,{'form': form}))
+
+@csrf_protect
+def handle_uploaded_file(request, f):
+    filename = f.name.encode('euc-kr').decode('euc-kr')
+    contents = ""
+    for chunk in f.chunks():
+        contents = contents + chunk.decode('utf-8')
+
+    scripts, dummy = Scripts.objects.get_or_create(title=filename, user=request.user)
+    scripts.contents = contents
+    scripts.save()
 
 @login_required(login_url=login_url)
 def scripts_update(request, scripts_id):

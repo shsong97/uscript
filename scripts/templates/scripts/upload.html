@@ -15,12 +15,9 @@
 <h4>Upload Scripts</h4>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="" method="post" class="form-inline" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
 {% csrf_token %}
-<p>
-<input type="file" name="fileToUpload" id="fileToUpload">
-</p>
+{{ form.as_p }}
 <button class="btn btn-default" type="submit">Upload</button>
 <a class="btn btn-default" href="/scripts/">List</a>
 </form>
