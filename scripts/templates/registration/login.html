@@ -2,12 +2,6 @@
 {% block title %}User Login{% endblock %}
 {% block content %}
 <style>
-	.border-box {
-		margin : 10px;
-		padding : 20px;
-    width: 480px;
-	}
-
   input { 
     width : 100%; 
     font-size: 16px;
@@ -15,19 +9,10 @@
     font-family: '돋움',Dotum, Helvetica,sans-serif;
   }
 
-  button {
-    border : 1px solid #1eb702;
-    background-color: #1eb702;
-    color: white;
-    width: 460px;
-    height: 61px;
-    font-size: 20px;
-    font-family: '돋움',Dotum, Helvetica,sans-serif;
-  }
 </style>
     <div class="container">
 
-    	<div class="border-box">
+    	<div class="jumbo-tron">
           <form class="form-signin" method="post" action=".">
             {% csrf_token %}
             <p>   
@@ -38,7 +23,7 @@
             </p>
             <input type="hidden" name="next" value="/scripts/" />
             <p>
-            <button class="btn-block" type="submit">로그인</button>
+            <button class="btn btn-success btn-block" type="submit">로그인</button>
             </p>
           </form>
     	</div>

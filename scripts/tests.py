@@ -12,10 +12,10 @@ def create_script(title, contents, user):
 	return Kid.objects.create(title=title, contents=contents, user=user)	
 
 
-def create_user(username, email, first_name, last_name, pass1):
+def create_user(username, email, first_name, last_name, password):
 	return User.objects.create(username=username, email=email, 
 		first_name=first_name, last_name=last_name,
-		password=pass1)
+		password=password)
 
 
 # user test case
@@ -38,15 +38,3 @@ class UserUrlTestCase(TestCase):
 	def test_adminpage(self):
 		response = self.client.get('/admin')
 		self.assertEqual(response.status_code, 301)
-
-
-# class ScriptTestCase(TestCase):
-# 	def setUp(self):
-# 		create_category("cat1")
-# 		create_category_sub("cat2", "cat1")
-		
-
-# 	def test_create_kid(self):
-# 		create_kid("test","cat2")
-# 		kid_object = get_object_or_404(Kid, title="test")
-# 		self.assertEqual(kid_object.title, "test")

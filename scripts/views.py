@@ -22,6 +22,7 @@ from scripts.forms import RegistrationForm, UploadFileForm
 from django.db.models import Q
 from django.core.servers.basehttp import FileWrapper
 
+
 def home(request):
     return HttpResponseRedirect('/scripts')
 
@@ -29,6 +30,7 @@ def home(request):
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/scripts')
+
 
 def login_page(request):
     if request.POST:
@@ -40,12 +42,15 @@ def login_page(request):
                 login(request, user)
                 # Redirect to a success page.
                 return HttpResponseRedirect(request.POST['next'])
-            # else:
+            else:
                 # Return a 'disabled account' error message
-        # else:
-            #Return an 'invalid login' error message.
+                return HttpResponse("<script>alert('disabled accout'); window.location='/scripts/login';</script>")
+        else:
+            # Return an 'invalid login' error message.
+            return HttpResponse("<script>alert('invalid accout'); window.location='/scripts/login';</script>")
 
     return render_to_response('registration/login.html', RequestContext(request))
+
 
 def register_success(request):
     return render_to_response('registration/register_success.html', RequestContext(request))
@@ -214,8 +219,18 @@ def search_page(request):
                     q = q & Q(title__icontains=keyword)
                 elif query_type == 'contents':
                     q = q & Q(contents__icontains=keyword)
+                elif query_type == 'tag':
+                    q = q & Q(tag_title__icontains=keyword)
 
-            scripts = Scripts.objects.filter(q).order_by('-pub_date')
+            if query_type == 'tag':
+                tags = [ tag.scripts.all() for tag in Tag.objects.filter(q) ]
+                scripts = []
+                for tag in tags:
+                    for script in tag:
+                        if not script in scripts:
+                            scripts.append(script)
+            else:
+                scripts = Scripts.objects.filter(q).order_by('-pub_date')
         else:  # query is empty
             scripts = Scripts.objects.all().order_by('-pub_date')
     else:  # no query

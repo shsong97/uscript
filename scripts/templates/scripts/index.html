@@ -75,8 +75,8 @@
 
 </div>
 {% if show_paginator %}
-<div class="pagination pagination-centered">
-  <ul>
+<nav style="text-align:center;">
+<ul class="pagination" >
   {% if has_prev %}
   <li><a href="javascript:nextpage({{ prev_page }});">Prev</a></li>
   {% endif %}
@@ -88,10 +88,10 @@
   {% if has_next %}
   <li><a href="javascript:nextpage({{ next_page }});">Next</a></li>
   {% endif %}
-  </ul>
   <!-- (Page {{ page }} of {{ pages}}) -->
+</ul>
+</nav>
 <input type="hidden" id="page" name="page" value="{{ page }}" />
-</div>
 
 {% endif %}
 
