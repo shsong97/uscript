@@ -88,12 +88,8 @@ STATIC_URL = '/static/'
 # Parse database configuration from $DATABASE_URL
 try:
     import dj_database_url
-<<<<<<< HEAD
     if dj_database_url.config():
         DATABASES['default'] =  dj_database_url.config()
-=======
-    DATABASES['default'] =  dj_database_url.config()
->>>>>>> 246d8c7b9aeb14a5d51507dece4c9b82d8c0107d
 except:
     pass
 
