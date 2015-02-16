@@ -1,18 +1,46 @@
 {% extends "base.html" %}
 {% block title %}User Login{% endblock %}
-{% block head %}User Login{% endblock %}
 {% block content %}
-        {% if form.has_errors %}
-        <p> 사용자 이름과 비밀번호가 일치하지 않습니다. Retry.</p>
-        {% endif %}
-        <form method="post" action=".">
-        {% csrf_token %}
-            <p><label for="id_username">User ID:</label>
-                {{ form.username }}</p>
-            <p><label for="id_password">Password:</label>
-                {{ form.password }}</p>
-            <!-- go to success page after login -->
+<style>
+	.border-box {
+		margin : 10px;
+		padding : 20px;
+    width: 480px;
+	}
+
+  input { 
+    width : 100%; 
+    font-size: 16px;
+    padding:7px;
+    font-family: '돋움',Dotum, Helvetica,sans-serif;
+  }
+
+  button {
+    border : 1px solid #1eb702;
+    background-color: #1eb702;
+    color: white;
+    width: 460px;
+    height: 61px;
+    font-size: 20px;
+    font-family: '돋움',Dotum, Helvetica,sans-serif;
+  }
+</style>
+    <div class="container">
+
+    	<div class="border-box">
+          <form class="form-signin" method="post" action=".">
+            {% csrf_token %}
+            <p>   
+            <input type="text" name="id_username" id="id_username" placeholder="Username" />
+            </p>
+            <p>
+            <input type="password" name="id_password" id="id_password" placeholder="Password" /> 
+            </p>
             <input type="hidden" name="next" value="/scripts/" />
-            <input class="btn" type="submit" value="Login" />
-        </form>
+            <p>
+            <button class="btn-block" type="submit">로그인</button>
+            </p>
+          </form>
+    	</div>
+    </div> <!-- /container -->
 {% endblock %}

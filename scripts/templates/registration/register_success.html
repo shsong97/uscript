@@ -2,8 +2,8 @@
 {% block title %}Success for register{% endblock %}
 {% block head %}Success for register.{% endblock %}
 {% block content %}
-Thank you for register.
+<h3>Thank you for register.</h>
 {% csrf_token %}
-<a href="/scripts/login/">Login</a> or 
-<a href="/scripts">Go Home</a>
+<a class="btn btn-default" href="/scripts/login/">Login</a> or 
+<a class="btn btn-default" href="/scripts">Go Home</a>
 {% endblock %}

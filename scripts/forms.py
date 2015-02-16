@@ -11,11 +11,11 @@ class RegistrationForm(forms.Form):
     first_name=forms.CharField(label='First Name',max_length=30)
     last_name=forms.CharField(label='Last Name',max_length=30)
     password1=forms.CharField(
-        label='password',
+        label='Password',
         widget=forms.PasswordInput()    
     )
     password2=forms.CharField(
-        label='password(confirm)',
+        label='Password(confirm)',
         widget=forms.PasswordInput()
     )
     # clean_<field> : valid field
@@ -25,7 +25,7 @@ class RegistrationForm(forms.Form):
             password2=self.cleaned_data['password2']
             if password1==password2:
                 return password2
-        raise forms.ValidateionError('Incorrect password')
+        raise forms.ValidationError('Incorrect password')
 
     def clean_username(self):
         username=self.cleaned_data['username']
@@ -37,3 +37,6 @@ class RegistrationForm(forms.Form):
         except ObjectDoesNotExist:
             return username
         raise forms.ValidationError('alread exists.')
+
+class UploadFileForm(forms.Form):
+    file  = forms.FileField()
