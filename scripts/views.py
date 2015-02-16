@@ -20,8 +20,6 @@ PAGE_GROUP = 10
 from django.core.paginator import Paginator
 from scripts.forms import RegistrationForm, UploadFileForm
 from django.db.models import Q
-from django.core.servers.basehttp import FileWrapper
-
 
 def home(request):
     return HttpResponseRedirect('/scripts')
