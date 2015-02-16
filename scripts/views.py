@@ -130,8 +130,9 @@ def upload_view(request):
 @csrf_protect
 def handle_uploaded_file(request, f):
     contents = ""
+    print f.charset
     for chunk in f.chunks():
-        contents = contents + chunk.decode('utf-8')
+        contents = contents + chunk.decode('euc-kr')
 
     scripts, dummy = Scripts.objects.get_or_create(
         title=f.name, user=request.user, contents=contents)
@@ -195,7 +196,7 @@ def scripts_download(request, scripts_id):
     title = scripts.title.encode('euc-kr')
     response = HttpResponse(content_type='plain/text')
     response['Content-Disposition'] = 'attachment; filename=' + title
-    response.write(scripts.contents)
+    response.write(scripts.contents.encode('euc-kr'))
     return response
 
 
