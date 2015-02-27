@@ -53,19 +53,22 @@
     <table class="table table-hover">
     	<tr>
     		<th style="">제목</th>
+        <th style="width:100px">Download</th>
         <th style="width:100px">작성자</th>
     		<th style="width:100px">작성일</th>
     	</tr>
     {% for scripts in scripts_list %}
 	<tr>
 		<td><a href="{% url 'scripts:detail' scripts.id %}">{{ scripts.title }}</a></td>
+    <td><a class="btn btn-default" href='/scripts/{{ scripts.id }}/download' >
+      <span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a></td>
           <td>{% if scripts.user.last_name %}
           {{ scripts.user.last_name }}{{ scripts.user.first_name }}
           {% else %}
           {{ scripts.user.username }}
           {% endif %}
           </td>
-		<td style="text-align : right;">{{ scripts.pub_date|date:"Y-m-j" }}</td>
+		<td>{{ scripts.pub_date|date:"Y-m-j" }}</td>
 	</tr>
     {% endfor %}
     </table>
